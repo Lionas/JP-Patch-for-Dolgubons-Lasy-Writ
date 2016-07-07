@@ -1,4 +1,4 @@
---Declarations
+﻿--Declarations
 
 WritCreater = {}
 WritCreater.settings = {}
@@ -105,6 +105,12 @@ local function parser(str)
 	local params = {}
 	local i = 1
 	str = string.gsub(str,":"," ")
+
+	if WritCreater.lang == "jp" then
+		str = string.gsub(str,"の"," ")
+		str = string.gsub(str,"を"," ")
+	end
+
     local searchResult1, searchResult2  = string.find(str,"%s+")
     if searchResult1 == 1 then
     	str = string.sub(str, searchResult2+1)
@@ -650,21 +656,18 @@ local function temporarycraftcheckerjustbecause(eventcode, station)
 			writs = writSearch()
 			selectedStation = station
 			if station == CRAFTING_TYPE_ENCHANTING and WritCreater.savedVars.Enchanter then
-				
 				if writs["E"] then
 					DolgubonsWrits:SetHidden(not WritCreater.savedVars.showWindow)
 					enchantCrafting(craftInfo["E"],writs["E"],craftingWrits)
 				end
 
 			elseif station == CRAFTING_TYPE_BLACKSMITHING and WritCreater.savedVars.Blacksmith then
-
 				if writs["B"]  then
 					DolgubonsWrits:SetHidden(not WritCreater.savedVars.showWindow)
 					crafting(craftInfo["B"],writs["B"],0,craftingWrits)
 				end
 
 			elseif station == CRAFTING_TYPE_CLOTHIER and WritCreater.savedVars.Clothier then
-				
 				if writs["C"] then
 					DolgubonsWrits:SetHidden(not WritCreater.savedVars.showWindow)
 					crafting(craftInfo["C"],writs["C"],0,craftingWrits)
