@@ -1,0 +1,47 @@
+<GuiXml>
+	<Controls>
+		<TopLevelControl name="DolgubonsWrits" clampedToScreen="true" mouseEnabled="true" movable="true" hidden="true">
+			<Dimensions x="470" y="200" />
+			<Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="TOP" offsetX="0" offsetY="50"/>
+			<Controls>
+				<Backdrop name="$(parent)Backdrop"  alpha="0.8" centerColor="666666" >
+			    	<Anchor point="TOPLEFT"  relativeTo="$(parent)" relativePoint="TOPLEFT"/>
+			    	<Edge edgeSize="1"/>
+		    		<Dimensions x="470" y="200" />
+		    		<Center file="esoui/art/crafting/crafting_alchemy_slottingbg.dds"/>
+		    		<Controls>
+	    				<Label name="$(parent)Output" width="400" height="400" font="ZoFontWinT1" Alpha="1" color="FFFFFF"
+				            wrapMode="TRUNCATE" verticalAlignment="TOP" horizontalAlignment="CENTER" text="" hidden="false">
+			        		<Anchor point="TOP" relativeTo="$(parent)" relativePoint="TOP" offsetY="50"/>
+			        		<Dimensions x="450" y="250" />
+				        </Label>
+				        <Button name="$(parent)Craft" alpha="1" inherits="ZO_DefaultButton" text="Craft" clickSound="Book_Acquired" topmost="true">
+				    		<Anchor point="BOTTOM" relativeTo="$(parent)Backdrop" relativePoint="BOTTOM" offsetX="0" offsetY="-20" />
+				    		<FontColors normalColor="FFFFFF" mouseOverColor="d9d9d9" pressedColor="b3b3b3"/>
+	         				<Dimensions x="130"  />
+							<OnClicked>
+								WritCreater.craft()
+							</OnClicked>
+		    			</Button>
+		    			<Button name="$(parent)SettingOn" alpha="1" inherits="ZO_DefaultButton" text="On" clickSound="Book_Acquired" topmost="true" hidden="true">
+				    		<Anchor point="BOTTOM" relativeTo="$(parent)Backdrop" relativePoint="BOTTOM" offsetX="0" offsetY="-20" />
+				    		<FontColors normalColor="FFFFFF" mouseOverColor="d9d9d9" pressedColor="b3b3b3"/>
+	         				<Dimensions x="150"  />
+							<OnClicked>
+								WritCreater.on()
+							</OnClicked>
+		    			</Button>
+		    			<Button name="$(parent)SettingOff" alpha="1" inherits="ZO_DefaultButton" text="Off" clickSound="Book_Acquired" topmost="true" hidden="true">
+				    		<Anchor point="BOTTOM" relativeTo="$(parent)Backdrop" relativePoint="BOTTOM" offsetX="0" offsetY="-20" />
+				    		<FontColors normalColor="FFFFFF" mouseOverColor="d9d9d9" pressedColor="b3b3b3"/>
+	         				<Dimensions x="150"  />
+							<OnClicked>
+								WritCreater.off()
+							</OnClicked>
+		    			</Button>
+				    </Controls>
+			    </Backdrop>
+		    </Controls>
+		</TopLevelControl>
+	</Controls>
+</GuiXml>
