@@ -89,43 +89,71 @@ local essenceNames
 
 --Capitalizes first letter, decapitalizes everything else
 local function proper(str)
-	--if str then
-		local temp = string.upper(string.sub(str,1,1))
-		local temp2 = string.lower(string.sub(str,2))
-		str=temp..temp2
-		return str
---	else
-	--	return ""
-	--end
+
+	if WritCreater.lang == "jp" then
+                 return str
+	else
+		--if str then
+			local temp = string.upper(string.sub(str,1,1))
+			local temp2 = string.lower(string.sub(str,2))
+			str=temp..temp2
+			return str
+	--	else
+		--	return ""
+		--end
+	end
 end
 
 
 --takes in a string and returns a table with each word seperate
 local function parser(str)
+
 	local params = {}
-	local i = 1
-	str = string.gsub(str,":"," ")
 
 	if WritCreater.lang == "jp" then
-		str = string.gsub(str,"の"," ")
-		str = string.gsub(str,"を"," ")
+
+		local i = 1
+		str = string.gsub(str,"の",":")
+		str = string.gsub(str,"を",":")
+		str = string.gsub(str,"な",":")
+
+		local searchResult1, searchResult2  = string.find(str,":")
+		if searchResult1 == 1 then
+			str = string.sub(str, searchResult2+1)
+		    	searchResult1, searchResult2  = string.find(str,":")
+		end
+
+		while searchResult1 do
+		    	params[i] = string.sub(str, 1, searchResult1-1)
+
+		    	str = string.sub(str, searchResult2+1)
+			searchResult1, searchResult2  = string.find(str,":")
+			i=i+1
+
+		end
+		params[i] = str
+
+	else
+		local i = 1
+		str = string.gsub(str,":"," ")
+
+		local searchResult1, searchResult2  = string.find(str,"%s+")
+		if searchResult1 == 1 then
+			str = string.sub(str, searchResult2+1)
+		    	searchResult1, searchResult2  = string.find(str,"%s+")
+		end
+
+		while searchResult1 do
+		    	params[i] = string.sub(str, 1, searchResult1-1)
+		    	str = string.sub(str, searchResult2+1)
+			searchResult1, searchResult2  = string.find(str,"%s+")
+			i=i+1
+		end
+		params[i] = str
 	end
 
-    local searchResult1, searchResult2  = string.find(str,"%s+")
-    if searchResult1 == 1 then
-    	str = string.sub(str, searchResult2+1)
-    	searchResult1, searchResult2  = string.find(str,"%s+")
-    end
-
-    while searchResult1 do
-
-    	params[i] = string.sub(str, 1, searchResult1-1)
-    	str = string.sub(str, searchResult2+1)
-	    searchResult1, searchResult2  = string.find(str,"%s+")
-	    i=i+1
-	end 
-	params[i] = str
 	return params
+
 end
 
 WritCreater.parser = parser
@@ -335,9 +363,16 @@ local function crafting(info,quest,medium, add)
 
 	local done = false
 	for i = 1, #conditions["text"] do
-		done = done or conditions["text"][i]
 
+		if WritCreater.lang == "jp" and conditions["text"][i] then
+			if  conditions["text"][i][1] == "品物" then
+				conditions["text"][i] = false
+			end
+		end
+
+		done = done or conditions["text"][i]
 	end
+
 	if startedcrafting == false then
 		craftingWrits = true
 	end
@@ -383,12 +418,19 @@ end
 WritCreater.writSearch = writSearch
 
 local function enchantSearch(info,conditions, position,source)
+
 	for i = 1, #conditions["text"] do
 		if conditions["text"][i] then
 			for j = 1, #conditions["text"][i] do
 				for k = 1, #info do
-					if string.upper(conditions["text"][i][j]) == string.upper(info[k]) then
-						conditions[position][i] = source[k]
+					if WritCreater.lang == "jp" then
+						if conditions["text"][i][j] == info[k] then
+							conditions[position][i] = source[k]
+						end
+					else
+						if string.upper(conditions["text"][i][j]) == string.upper(info[k]) then
+							conditions[position][i] = source[k]
+						end
 					end
 				end
 			end
@@ -409,24 +451,46 @@ end
 
 
 local function findItem(item)
+
 	if SHARED_INVENTORY.bagCache[BAG_VIRTUAL] then
 		for index, data in pairs(SHARED_INVENTORY.bagCache[BAG_VIRTUAL]) do  
-			if string.upper(data.name)==string.upper(item) then 
-				return BAG_VIRTUAL, data.slotIndex
-			end 
+			if WritCreater.lang == "jp" then
+				if data.name == item then
+					return BAG_VIRTUAL, data.slotIndex
+				end 
+			else
+				if string.upper(data.name)==string.upper(item) then 
+					return BAG_VIRTUAL, data.slotIndex
+				end 
+			end
 		end
 	end
 
 	for i=0, GetBagSize(BAG_BANK) do
-		if string.upper(formatName(GetItemName(BAG_BANK,i)))==string.upper(item)  and  GetItemTotalCount(BAG_BANK,i) then
-			return BAG_BANK, i
+		if WritCreater.lang == "jp" then
+			if formatName(GetItemName(BAG_BANK,i)) == item and GetItemTotalCount(BAG_BANK,i) then
+				return BAG_VIRTUAL,i
+			end 
+		else
+			if string.upper(formatName(GetItemName(BAG_BANK,i)))==string.upper(item)  and  GetItemTotalCount(BAG_BANK,i) then
+				return BAG_BANK, i
+			end
 		end
+
 	end
+
 	for i=0, GetBagSize(BAG_BACKPACK) do
-		if string.upper(formatName(GetItemName(BAG_BACKPACK,i)))==string.upper(item)  and GetItemTotalCount(BAG_BACKPACK,i) then
-			return BAG_BACKPACK,i
+		if WritCreater.lang == "jp" then
+			if formatName(GetItemName(BAG_BACKPACK,i)) == item and GetItemTotalCount(BAG_BACKPACK,i) then
+				return BAG_BACKPACK,i
+			end 
+		else
+			if string.upper(formatName(GetItemName(BAG_BACKPACK,i)))==string.upper(item)  and GetItemTotalCount(BAG_BACKPACK,i) then
+				return BAG_BACKPACK,i
+			end
 		end
 	end
+
 	return nil, item
 end
 
@@ -481,14 +545,29 @@ local function enchantCrafting(info, quest,add)
 
 	enchantSearch(info["pieces"], conditions,"type",essenceNames) --searches for pattern
 	enchantSearch(info["match"], conditions,"glyph",potencyNames) --searches for the type of mats
+
 	for i=1, numConditions do
 		if conditions["text"][i] then
 			local ta={}
 			local essence={}
 			local potency={}
-			ta["bag"],ta["slot"] = findItem("ta")
+                        local taStr
+
+			if WritCreater.lang == "jp" then
+				taStr = WritCreater.getTaString()
+			else
+				taStr = "ta"
+			end
+
+			ta["bag"],ta["slot"] = findItem(taStr)
+
 			essence["bag"], essence["slot"] = findItem(conditions["type"][i])
 			potency["bag"], potency["slot"] = findItem(conditions["glyph"][i])
+
+			if essence["slot"] == nil or potency["slot"] == nil then
+				return
+			end
+
 			if add then
 				if essence["bag"] and potency["bag"] and ta["bag"] then
 					out(WritCreater.strings.runeReq(proper(conditions["type"][i]),proper(conditions["glyph"][i])))

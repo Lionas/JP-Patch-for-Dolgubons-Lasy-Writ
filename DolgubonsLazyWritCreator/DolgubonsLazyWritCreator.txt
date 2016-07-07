@@ -26,11 +26,11 @@ libs\LibAddonMenu-2.0\controls\header.lua
 libs\LibAddonMenu-2.0\controls\slider.lua
 libs\LibAddonMenu-2.0\controls\texture.lua
 
-
 WritCreater.xml
 WritCreater.lua
 AlchGrab.lua
 
 Languages/default.lua
 Languages/$(language).lua
+
 ResetTime.lua
