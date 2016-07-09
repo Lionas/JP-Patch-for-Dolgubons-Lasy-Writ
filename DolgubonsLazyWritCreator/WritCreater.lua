@@ -215,8 +215,14 @@ local function searchLevel(info,conditions,m,place)
 		if conditions["text"][i] then
 			for j = 1, #conditions["text"][i] do
 				for k = 1, #info do
-					if string.upper(conditions["text"][i][j]) == string.upper(info[k]) then
-						conditions[place][i] = k
+					if WritCreater.lang == "jp" then
+						if  conditions["text"][i][j] == info[k] then
+							conditions[place][i] = k
+						end
+					else
+						if string.upper(conditions["text"][i][j]) == string.upper(info[k]) then
+							conditions[place][i] = k
+						end
 					end
 				end
 			end
@@ -226,8 +232,14 @@ end
 
 local function typeAlreadyUsed(typeNeeded, mats)
 	for i=1, #typeNeeded do
-		if string.upper(typeNeeded[i]) == string.upper(mats) then
-			return i
+		if WritCreater.lang == "jp" then
+			if typeNeeded[i] == mats then
+				return i
+			end
+		else
+			if string.upper(typeNeeded[i]) == string.upper(mats) then
+				return i
+			end
 		end
 	end
 	return #typeNeeded+1
