@@ -48,8 +48,8 @@ local craftInfo =
 				[6] = "クレッシュ",
 				[7] = "アイアンスレッド",
 				[8] = "シルバーウィーブ",
-				[9] = "影の布",
-				[10]= "先人のシルク",
+				[9] = "影",
+				[10]= "先人",
 				[11]= "生皮",
 				[12]= "皮",
 				[13]= "革",
@@ -114,7 +114,7 @@ local craftInfo =
 				[6] = "カルシニウム",
 				[7] = "ガラタイト",
 				[8] = "水銀",
-				[9] = "虚無の鉄",
+				[9] = "虚無",
 				[10]= "ルベダイト",
 			},
 			["names"] = --Does not strictly need to be exact, but people would probably appreciate it
@@ -136,10 +136,10 @@ local craftInfo =
 			["pieces"] = --Exact!!!
 			{
 				[1] = "弓",
-				[3] = "業火の杖",
-				[4] = "氷の杖",
-				[5] = "稲妻の杖",
-				[6] = "回復の杖",
+				[3] = "業火",
+				[4] = "氷",
+				[5] = "稲妻",
+				[6] = "回復",
 				[2] = "盾",
 			},
 			["match"] = --exact!!! This is not the material, but rather the prefix the material gives to equipment. e.g. Maple Bow. Oak Bow.
@@ -360,33 +360,38 @@ local exceptions =
 {
 	[1] = 
 	{
-		["original"] = "rubedo leather",
-		["corrected"] = "rubedo",
+		["original"] = "影の布",
+		["corrected"] = "影",
 	},
 	[2] = 
 	{
-		["original"] = "ancestor silk",
-		["corrected"] = "ancestor",
+		["original"] = "先人のシルク",
+		["corrected"] = "先人",
 	},
 	[3] = 
 	{
-		["original"] = "ebony",
-		["corrected"] = "ebon",
+		["original"] = "虚無の鉄",
+		["corrected"] = "虚無",
 	},
 	[4] = 
 	{
-		["original"] = "orichalcum",
-		["corrected"] = "orichalc",
+		["original"] = "業火の杖",
+		["corrected"] = "業火",
 	},
 	[5] = 
 	{
-		["original"] = "ruby ash",
-		["corrected"] = "ruby",
+		["original"] = "氷の杖",
+		["corrected"] = "氷",
 	},
 	[6] = 
 	{
-		["original"] = "dwarven pauldrons",
-		["corrected"] = "dwarven pauldron",
+		["original"] = "稲妻の杖",
+		["corrected"] = "稲妻",
+	},
+	[7] = 
+	{
+		["original"] = "回復の杖",
+		["corrected"] = "回復",
 	}
 }
 
