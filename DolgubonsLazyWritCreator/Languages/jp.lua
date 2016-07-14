@@ -392,6 +392,11 @@ local exceptions =
 	{
 		["original"] = "回復の杖",
 		["corrected"] = "回復",
+	},
+	[8] = 
+	{
+		["original"] = "ルベダイトのヘルム",
+		["corrected"] = "ルベダイト",
 	}
 }
 
