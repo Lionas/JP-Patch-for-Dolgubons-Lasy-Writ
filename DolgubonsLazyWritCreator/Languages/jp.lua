@@ -110,7 +110,7 @@ local craftInfo =
 				[2] = "鋼鉄",
 				[3] = "オリハルコン",
 				[4] = "ドワーフ",
-				[5] = "黒壇",
+				[5] = "黒檀",
 				[6] = "カルシニウム",
 				[7] = "ガラタイト",
 				[8] = "水銀",
@@ -123,7 +123,7 @@ local craftInfo =
 				[2] = "鋼鉄のインゴット",
 				[3] = "オリハルコンのインゴット",
 				[4] = "ドワーフのインゴット",
-				[5] = "黒壇のインゴット",
+				[5] = "黒檀のインゴット",
 				[6] = "カルシニウムのインゴット",
 				[7] = "ガラタイトのインゴット",
 				[8] = "水銀のインゴット",
@@ -202,6 +202,74 @@ local craftInfo =
 	return craftInfo
 
 end
+
+local styleNames = 
+{
+	[2] = "ブレトン",
+	[3 ]= "レッドガード" ,
+	[4 ]= "オーク" ,
+	[5 ]= "ダンマー" ,
+	[6 ]= "ノルド" ,
+	[7 ]= "アルゴニアン" ,
+	[8 ]= "アルトマー" ,
+	[9 ]= "ボスマー" ,
+	[10] ="カジート" ,
+	[12]= "盗賊ギルド",
+	[13]= "闇の一党" , 
+	[14] ="マラキャス" ,
+	[15] ="ドゥエマー" ,
+	[16]= "古代エルフ",
+	[18]= "蛮族" ,
+	[20]= "野生",
+	[21]= "デイドラ" ,
+	[22]= "トリニマク" ,
+	[23]= "古代オーク" ,
+	[24]= "ダガーフォール・カバナント" ,
+	[25]= "エボンハート・パクト" ,
+	[26]= "アルドメリ・ドミニオン" ,
+	[27]= "傭兵" ,
+	[29]= "碧水晶" ,
+	[30]= "シヴキン" ,
+	[31]= "魂なき者" ,
+	[34]= "アカヴィリ" ,
+	[35]= "帝国" ,
+	[42]= "アバーズ・ウォッチ" ,
+	[46]= "ドロームアスラ" , -- Maybe
+	[47]= "アサシン同盟" ,
+	[48]= "無法者" ,
+}
+
+
+local function mypairs(tableIn)
+	local t = {}
+	for k,v in pairs(tableIn) do
+		t[#t + 1] = {k,v}
+	end
+	table.sort(t, function(a,b) return a[1]<b[1] end)
+
+	return t
+end
+
+local function styleCompiler()
+	local submenuTable = {}
+	styleNames = mypairs(styleNames)
+	for k,v in ipairs(styleNames) do
+		local option = {
+			type = "checkbox",
+			name = v[2],
+			width = "half",
+			tooltip = "クラフトに" .. v[2] .. "スタイルを使用することを許可する",
+			getFunc = function() return WritCreater.savedVars.styles[v[1]] end,
+			setFunc = function(value)
+				WritCreater.savedVars.styles[v[1]] = value
+				end,
+		}
+		submenuTable[#submenuTable + 1] = option
+	end
+	return submenuTable
+end
+
+
 
 
 function WritCreater.langOptions() --Sentimental
@@ -283,6 +351,28 @@ function WritCreater.langOptions() --Sentimental
          			WritCreater.savedVars.delay = value
          		end,
          		disabled = function() return not WritCreater.savedVars.shouldGrab end,
+         },
+         [9] = {
+			type = "checkbox",
+			name = "自動取得設定を無視にする",
+			tooltip = "ゲームプレイメニューの自動取得設定を無視にし、令状報酬の箱について以下のカスタム設定を使用する",
+			getFunc = function() return WritCreater.savedVars.ignoreAuto end,
+			setFunc = function(value) WritCreater.savedVars.ignoreAuto = value end,
+			},
+		[10] = {
+			type = "checkbox",
+			name = "令状報酬の箱の自動取得",
+			tooltip = "令状報酬の箱を開けた時に中身を取得する",
+			getFunc = function() return WritCreater.savedVars.autoLoot end,
+			setFunc = function(value) WritCreater.savedVars.autoLoot = value end,
+			disabled = function() return not WritCreater.savedVars.ignoreAuto end,
+			},
+          [11] = {
+         	type = "submenu",
+			name = "使用するスタイルストーン",
+			tooltip = "アドオンでどのスタイルストーンを使用するか選択する",
+         	controls = styleCompiler(),
+         	reference = "WritCreaterStyleSubmenu",
          },
     }
     return options
@@ -489,6 +579,22 @@ function WritCreater.langStrings()
 }
 return strings
 
+end
+
+function WritCreater.langWritRewardBoxes () 
+local WritRewardNames = { -- these are the containers you receive as writ rewards
+
+[1] = "錬金術師の器",
+[2] = "付呪師の貴品箱",
+[3] = "仕立師のかばん",
+[4] = "鍛冶師の木枠箱",
+[5] = "調理師のバック",
+[6] = "木工師のケース"
+
+}
+
+
+	return WritRewardNames
 end
 
 
