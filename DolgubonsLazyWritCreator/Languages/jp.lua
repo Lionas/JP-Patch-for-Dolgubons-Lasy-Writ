@@ -1,4 +1,4 @@
-﻿
+
 
 function WritCreater.langWritNames() --Exacts!!!  I know for german alchemy writ is Alchemistenschrieb - so ["G"] = schrieb, and ["A"]=Alchemisten
 	local names = {
@@ -110,7 +110,7 @@ local craftInfo =
 				[2] = "鋼鉄",
 				[3] = "オリハルコン",
 				[4] = "ドワーフ",
-				[5] = "黒壇",
+				[5] = "黒檀",
 				[6] = "カルシニウム",
 				[7] = "ガラタイト",
 				[8] = "水銀",
@@ -123,7 +123,7 @@ local craftInfo =
 				[2] = "鋼鉄のインゴット",
 				[3] = "オリハルコンのインゴット",
 				[4] = "ドワーフのインゴット",
-				[5] = "黒壇のインゴット",
+				[5] = "黒檀のインゴット",
 				[6] = "カルシニウムのインゴット",
 				[7] = "ガラタイトのインゴット",
 				[8] = "水銀のインゴット",
@@ -191,8 +191,8 @@ local craftInfo =
 				[10]= "優秀",
 				[11]= "希少",
 				[12]= "至高",
-				[13]= "伝説",
-				[14]= "壮麗",
+				[13]= "壮麗",
+				[14]= "伝説",
 				[15]= "最上",
 				[16]= "真に最上",
 			},
@@ -201,91 +201,6 @@ local craftInfo =
 
 	return craftInfo
 
-end
-
-
-function WritCreater.langOptions() --Sentimental
-	local options =  {
-		[1] = {
-		type = "checkbox",
-		name = "生産ウィンドウを表示",
-		tooltip = "生産設備が開いたときに生産ウィンドウを表示する",
-		getFunc = function() return WritCreater.savedVars.showWindow end,
-		setFunc = function(value) 
-			WritCreater.savedVars.showWindow = value
-			if value == false then
-				WritCreater.savedVars.autoCraft = true
-			end
-
-		end,
-		},
-		[2] = {
-              type = "checkbox",
-              name = "自動生産",
-              tooltip = "これを選択すると生産設備に入った時にアドオンが即時に生産を開始する。ウィンドウが非表示の場合でもこの機能は有効です。",
-              getFunc = function() return WritCreater.savedVars.autoCraft end,
-              disabled = function() return not WritCreater.savedVars.showWindow end,
-              setFunc = function(value) 
-              	WritCreater.savedVars.autoCraft = value 
-              end,
-         },
-     		[3] = {
-              type = "checkbox",
-              name = "鍛冶",
-              tooltip = "鍛冶のアドオンをオフにする",
-              getFunc = function() return WritCreater.savedVars.Blacksmith end,
-              setFunc = function(value) 
-              	WritCreater.savedVars.Blacksmith = value 
-              end,
-         },
-     		[4] = {
-              type = "checkbox",
-              name = "縫製",
-              tooltip = "縫製のアドオンをオフにする",
-              getFunc = function() return WritCreater.savedVars.Clothier end,
-              setFunc = function(value) 
-              	WritCreater.savedVars.Clothier = value 
-              end,
-         },
-     		[5] = {
-              type = "checkbox",
-              name = "付呪",
-              tooltip = "付呪のアドオンをオフにする",
-              getFunc = function() return WritCreater.savedVars.Enchanter end,
-              setFunc = function(value) 
-              	WritCreater.savedVars.Enchanter = value 
-              end,
-         },
-     		[6] = {
-              type = "checkbox",
-              name = "木工",
-              tooltip = "木工のアドオンをオフにする",
-              getFunc = function() return WritCreater.savedVars.Woodworker end,
-              setFunc = function(value) 
-              	WritCreater.savedVars.Woodworker = value 
-              end,
-         },
-         	[7] = {
-         	type = "checkbox",
-         	name = "令状アイテムを取り込む",
-         	tooltip = "令状に必要なアイテム（ニルンルート、ターなど）銀行から取り込みます",
-         	getFunc = function() return WritCreater.savedVars.shouldGrab end,
-         	setFunc = function(value) WritCreater.savedVars.shouldGrab = value end,
-         },
-         	[8] = {
-         		type = "slider",
-         		name = "アイテム取り込み遅延",
-         		tooltip = "銀行からアイテムを取り込む前に待機する時間（ミリ秒）",
-         		min = 10,
-         		max = 2000,
-         		getFunc = function() return WritCreater.savedVars.delay end,
-         		setFunc = function(value)
-         			WritCreater.savedVars.delay = value
-         		end,
-         		disabled = function() return not WritCreater.savedVars.shouldGrab end,
-         },
-    }
-    return options
 end
 
 function WritCreater.langEssenceNames() --exact!
@@ -323,38 +238,6 @@ function WritCreater.langPotencyNames() --exact!! Also, these are all the positi
 	return potencyNames
 end
 
-function WritCreater.langTutorial(i) --sentimental
-	local t = {
-		[5]="最初に、/dailyreset というコマンドで、毎日の\nサーバのリセットまでの時間を知ることができます。\n最後に、このアドオンは9種類の\n種族（同盟）スタイルの素材のみ使用します。",
-		[4]="最後に、それぞれの職業に対してアドオンを活性化\nするか非活性にするかを選択できます。\nデフォルトは全ての生産がオンになっています。\nもし、いくつかをオフにしたい場合、設定を確認してください。\nまた、あなたが知っておくべきことがあります。",
-		[3]="次に、生産設備を使用する時にこのウィンドウを\n表示するかどうかを選択する必要があります。\nこのウィンドウでは必要な材料の数と\n現在いくつ持っているかが分かります。",
-		[2]="最初の設定は自動生産を使用するかどうかです。\nオンにした時は生産設備に入った時に\nアドオンが自動的に生産を開始します。",
-		[1]="Dolgubon's Lazy Writ Crafterへようこそ!\n最初にいくつかの設定を行います。\nこの設定は設定メニューからいつでも変更できます。"
-	}
-	return t[i]
-end
-
-function WritCreater.langTutorialButton(i,onOrOff) --sentimental and short pls
-	local tOn = 
-	{
-		[1]="デフォルトを使用",
-		[2]="オン",
-		[3]="表示する",
-		[4]="続ける",
-		[5]="終了する",
-	}
-	local tOff=
-	{
-		[1]="続ける",
-		[2]="オフ",
-		[3]="表示しない",
-	}
-	if onOrOff then
-		return tOn[i]
-	else
-		return tOff[i]
-	end
-end
 
 local exceptions = 
 {
@@ -395,8 +278,8 @@ local exceptions =
 	},
 	[8] = 
 	{
-		["original"] = "ルベダイトのヘルム",
-		["corrected"] = "ルベダイト",
+		["original"] = "ヘルム",
+		["corrected"] = "兜",
 	}
 }
 
@@ -423,72 +306,152 @@ function WritCreater.enchantExceptions(condition)
 	return condition
 end
 
-function WritCreater.langStrings()
-	local strings = {
-	["runeReq"] = function (essence, potency) 
-		return "|c2dff00生産には1個の|r ター |c2dff00と1個の |cffcc66"..essence.."|c2dff00 と\n1個の |c0066ff"..potency.."|r|c2dff00 が必要です。" end,
-	["runeMissing"] = function (ta,essence,potency)
-		if not ta["bag"] then
-			if not essence["bag"] then
-				if not potency["bag"] then
-					return "|cf60000グリフが生産できませんでした。\n|r"..ta["slot"].."|cf60000 と |cffcc66"..essence["slot"].."|cf60000 または |c0066ff"..potency["slot"].."|r|cf60000 を持っていません。"
-				else
-					return "|cf60000グリフが生産できませんでした。\n|r"..ta["slot"].."|cf60000 または |cffcc66"..essence["slot"].."|r|cf60000 を持っていません。"
-				end
+
+
+function WritCreater.langTutorial(i) --sentimental
+	local t = {
+		[5]="最初に、/dailyreset というコマンドで、毎日の\nサーバのリセットまでの時間を知ることができます。\n最後に、このアドオンは9種類の\n種族（同盟）スタイルの素材のみ使用します。",
+		[4]="最後に、それぞれの職業に対してアドオンを活性化\nするか非活性にするかを選択できます。\nデフォルトは全ての生産がオンになっています。\nもし、いくつかをオフにしたい場合、設定を確認してください。\nまた、あなたが知っておくべきことがあります。",
+		[3]="次に、生産設備を使用する時にこのウィンドウを\n表示するかどうかを選択する必要があります。\nこのウィンドウでは必要な材料の数と\n現在いくつ持っているかが分かります。",
+		[2]="最初の設定は自動生産を使用するかどうかです。\nオンにした時は生産設備に入った時に\nアドオンが自動的に生産を開始します。",
+		[1]="Dolgubon's Lazy Writ Crafterへようこそ!\n最初にいくつかの設定を行います。\nこの設定は設定メニューからいつでも変更できます。"
+	}
+	return t[i]
+end
+
+function WritCreater.langTutorialButton(i,onOrOff) --sentimental and short pls
+	local tOn = 
+	{
+		[1]="デフォルトを使用",
+		[2]="オン",
+		[3]="表示する",
+		[4]="続ける",
+		[5]="終了する",
+	}
+	local tOff=
+	{
+		[1]="続ける",
+		[2]="オフ",
+		[3]="表示しない",
+	}
+	if onOrOff then
+		return tOn[i]
+	else
+		return tOff[i]
+	end
+end
+
+
+local function runeMissingFunction(ta,essence,potency)
+	if not ta["bag"] then
+		if not essence["bag"] then
+			if not potency["bag"] then
+				return "|cf60000グリフが生産できませんでした。\n|r"..ta["slot"].."|cf60000 と |cffcc66"..essence["slot"].."|cf60000 または |c0066ff"..potency["slot"].."|r|cf60000 を持っていません。"
 			else
-				if not potency["bag"] then
-					return "|cf60000グリフが生産できませんでした。\n|rター|cf60000 または |c0066ff"..potency["slot"].."|r|cf60000 を持っていません。"
-				else
-					return "|cf60000グリフが生産できませんでした。\n|rター|cf60000 を持っていません。"
-				end
+				return "|cf60000グリフが生産できませんでした。\n|r"..ta["slot"].."|cf60000 または |cffcc66"..essence["slot"].."|r|cf60000 を持っていません。"
 			end
 		else
-			if not essence["bag"] then
-				if not potency["bag"] then
-					return "|cf60000グリフが生産できませんでした。\n|cffcc66"..essence["slot"].."|cf60000 または |c0066ff"..potency["slot"].."|r|cf60000 を持っていません。"
-				else
-					return "|cf60000グリフが生産できませんでした。\n|cffcc66"..essence["slot"].."|r|cf60000 を持っていません。"
-				end
+			if not potency["bag"] then
+				return "|cf60000グリフが生産できませんでした。\n|rター|cf60000 または |c0066ff"..potency["slot"].."|r|cf60000 を持っていません。"
 			else
-				if not potency["bag"] then
-					return "|cf60000グリフが生産できませんでした。\n|c0066ff"..potency["slot"].."|r|cf60000 を持っていません。"
-				end
+				return "|cf60000グリフが生産できませんでした。\n|rター|cf60000 を持っていません。"
 			end
 		end
-	end,
-	["smithingMissing"] = "\n|cf60000十分な材料を持っていません|r",
-	["craftAnyway"] = "強制的に作成",
-	["smithingEnough"] = "\n|c2dff00十分な材料を持っています|r",
-	["craft"] = "|c00ff00作成|r",
-	["smithingReqM"] = function(amount, type, more) return "生産には" .. type .. "を" .. amount .. "個使用します\n (|cf60000あと" .. more .. "個必要|r)" end,
-	["smithingReqM2"] = function (amount,type,more) return "\n同様に" .. type .. "を" .. amount .. "個使用します\n (|cf60000あと" .. more .. "個必要|r)" end,
-	["smithingReq"] = function (amount,type, current) return "生産には" .. type .. "を" .. amount .. "個使用します\n (|c2dff00現在" .. current .. "個使用可能|r)" end,
-	["smithingReq2"] = function (amount,type, current) return "\n同様に" .. type .. "を" .. amount .."個使用します\n (|c2dff00現在" .. current .. "個使用可能|r)" end,
-	["crafting"] = "|c00ff00作成中...|r",
-	["craftIncomplete"] = "|cf60000生産が完全に終わりませんでした。\nさらに材料が必要です。|r",
-	["moreStyle"] = "|cf60000使用可能な9種類の基本種族（帝国は含まない）の\nスタイル素材がありません|r",
-	["dailyreset"] = function (till)
-		if till["hour"]==0 then
-			if till["minute"]==1 then
-				d("毎日のサーバーリセットまであと1分です！")
-			elseif till["minute"]==0 then
-				if stamp==1 then
-					d("毎日のリセットまであと"..stamp.."秒！")
-				else
-					d("真剣に... 問い合わせをやめてください。あなたはせっかちですね！")
-				end
+	else
+		if not essence["bag"] then
+			if not potency["bag"] then
+				return "|cf60000グリフが生産できませんでした。\n|cffcc66"..essence["slot"].."|cf60000 または |c0066ff"..potency["slot"].."|r|cf60000 を持っていません。"
 			else
-				d("毎日のリセットまであと" .. till["minute"] .."分！")
+				return "|cf60000グリフが生産できませんでした。\n|cffcc66"..essence["slot"].."|r|cf60000 を持っていません。"
 			end
 		else
-			d("毎日のリセットまであと" .. till["hour"].."時間".. till["minute"] .."分")
-		end 
-	end,
-	["complete"] = "|c00FF00令状完了|r",
-	["craftingstopped"] = "生産を中止しました。アドオンが正しいアイテムを生産しているかチェックしてください",
-}
-return strings
+			if not potency["bag"] then
+				return "|cf60000グリフが生産できませんでした。\n|c0066ff"..potency["slot"].."|r|cf60000 を持っていません。"
+			end
+		end
+	end
+end
 
+local function dailyResetFunction(till)
+	if till["hour"]==0 then
+		if till["minute"]==1 then
+			d("毎日のサーバーリセットまであと1分です！")
+		elseif till["minute"]==0 then
+			if stamp==1 then
+				d("毎日のリセットまであと"..stamp.."秒！")
+			else
+				d("真剣に... 問い合わせをやめてください。あなたはせっかちですね！")
+			end
+		else
+			d("毎日のリセットまであと" .. till["minute"] .."分！")
+		end
+	else
+		d("毎日のリセットまであと" .. till["hour"].."時間".. till["minute"] .."分")
+	end 
+end
+
+WritCreater.strings = {
+	["runeReq"] 								= function (essence, potency) return "|c2dff00生産には1個の|r ター |c2dff00と1個の |cffcc66"..essence.."|c2dff00 と\n1個の |c0066ff"..potency.."|r|c2dff00 が必要です。" end,
+	["runeMissing"] 							= runeMissingFunction,
+	["notEnoughSkill"]							= "必要な装備を作るための十分に高い生産スキルを有していません。",
+	["smithingMissing"] 						= "\n|cf60000十分な材料を持っていません|r",
+	["craftAnyway"]								= "強制的に作成",
+	["smithingEnough"] 							= "\n|c2dff00十分な材料を持っています|r",
+	["craft"] 									= "|c00ff00作成|r",
+	["smithingReqM"] 							= function(amount, type, more) return "生産には" .. type .. "を" .. amount .. "個使用します\n (|cf60000あと" .. more .. "個必要|r)" end,
+	["smithingReqM2"] 							= function (amount,type,more) return "\n同様に" .. type .. "を" .. amount .. "個使用します\n (|cf60000あと" .. more .. "個必要|r)" end,
+	["smithingReq"] 							= function (amount,type, current) return "生産には" .. type .. "を" .. amount .. "個使用します\n (|c2dff00現在" .. current .. "個使用可能|r)" end,
+	["smithingReq2"] 							= function (amount,type, current) return "\n同様に" .. type .. "を" .. amount .."個使用します\n (|c2dff00現在" .. current .. "個使用可能|r)" end,
+	["crafting"] 								= "|c00ff00作成中...|r",
+	["craftIncomplete"] 						= "|cf60000生産が完全に終わりませんでした。\nさらに材料が必要です。|r",
+	["moreStyle"] 								= "|cf60000使用可能な9種類の基本種族（帝国は含まない）の\nスタイル素材がありません|r",
+	["dailyreset"] 								= dailyResetFunction,
+	["complete"] 								= "|c00FF00令状完了|r",
+	["craftingstopped"] 						= "生産を中止しました。アドオンが正しいアイテムを生産しているかチェックしてください",
+}
+
+
+
+WritCreater.optionStrings = {}
+WritCreater.optionStrings["style tooltip"]                            = function (styleName) return zo_strformat("クラフトに<<1>>スタイルを使用することを許可する",styleName) end 
+WritCreater.optionStrings["show craft window"]                        = "生産ウィンドウを表示"
+WritCreater.optionStrings["show craft window tooltip"]                = "生産設備が開いたときに生産ウィンドウを表示する"
+WritCreater.optionStrings["autocraft"]                                = "自動生産"
+WritCreater.optionStrings["autocraft tooltip"]                        = "これを選択すると生産設備に入った時にアドオンが即時に生産を開始する。ウィンドウが非表示の場合でもこの機能は有効です。"
+WritCreater.optionStrings["blackmithing"]                             = "鍛冶"
+WritCreater.optionStrings["blacksmithing tooltip"]                    = "鍛冶のアドオンをオフにする"
+WritCreater.optionStrings["clothing"]                                 = "縫製"
+WritCreater.optionStrings["clothing tooltip"]                         = "縫製のアドオンをオフにする"
+WritCreater.optionStrings["enchanting"]                               = "付呪"
+WritCreater.optionStrings["enchanting tooltip"]                       = "付呪のアドオンをオフにする"
+WritCreater.optionStrings["woodworking"]                              = "木工"
+WritCreater.optionStrings["woodworking tooltip"]                      = "木工のアドオンをオフにする"
+WritCreater.optionStrings["writ grabbing"]                            = "令状アイテムを取り込む"
+WritCreater.optionStrings["writ grabbing tooltip"]                    = "令状に必要なアイテム（ニルンルート、ターなど）銀行から取り込みます"
+WritCreater.optionStrings["delay"]                                    = "アイテム取り込み遅延"
+WritCreater.optionStrings["delay tooltip"]                            = "銀行からアイテムを取り込む前に待機する時間（ミリ秒）"
+WritCreater.optionStrings["ignore autoloot"]                          = "自動取得設定を無視にする"
+WritCreater.optionStrings["ignore autoloot tooltip"]                  = "ゲームプレイメニューの自動取得設定を無視にし、令状報酬の箱について以下のカスタム設定を使用する"
+WritCreater.optionStrings["autoloot containters"]                     = "令状報酬の箱の自動取得"
+WritCreater.optionStrings["autoLoot containters tooltip"]             = "令状報酬の箱を開けた時に中身を取得する"
+WritCreater.optionStrings["style stone menu"]                         = "使用するスタイルストーン"
+WritCreater.optionStrings["style stone menu tooltip"]                 = "アドオンでどのスタイルストーンを使用するか選択する"
+
+
+function WritCreater.langWritRewardBoxes () 
+local WritRewardNames = { -- these are the containers you receive as writ rewards
+
+[1] = "錬金術師の器",
+[2] = "付呪師の貴品箱",
+[3] = "仕立師のかばん",
+[4] = "鍛冶師の木枠箱",
+[5] = "調理師のバック",
+[6] = "木工師のケース"
+
+}
+
+
+	return WritRewardNames
 end
 
 
